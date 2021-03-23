@@ -1,0 +1,89 @@
+#! /bin/bash
+
+checkIn(){
+for FL in $(ls *.h) $(ls *.c)
+do				
+	ci $FL
+done
+}
+
+checkOut(){
+for FL in $(ls *.h,v) $(ls *.c,v)
+do				
+	co $FL
+done
+}
+
+
+checkOutDevs(){
+for FL in $(ls *.h,v) $(ls *.c,v)
+do				
+	co -l $FL
+done
+}
+runProject(){
+	read  -n1 -p "Do you want to run project(y/n)? "
+	echo
+	if [ $REPLY == 'y' ]
+	then 
+		./out
+	
+	elif [ $REPLY == 'n' ]
+	then 
+		exit
+	
+	fi
+}
+
+
+
+#We start the script form here
+buildProject(){
+if ( make )
+then
+	echo "Programme build success"
+
+
+else 
+	echo "ERROR! Programme build failed"
+fi
+}
+
+
+	while ( true )
+	do
+	echo "___Main Menu___"
+	echo "1: Check in files"
+	echo "2: Check out files"
+	echo "3: Check out files for dev"
+	echo "4: Build the project"
+	echo "5: Run the project"
+	echo "0: exit"
+	read -n1 -p "Enter the choice : " choice
+	echo
+	case $choice in 
+		1)
+			checkIn
+			;;
+		2)	
+			checkOut
+			;;
+		3)
+			checkOutDevs
+			;;
+		4) 
+			buildProject
+			;;
+		5)	
+			
+			runProject
+			;;
+		0)
+			exit		
+	esac
+	done
+
+
+
+
+
