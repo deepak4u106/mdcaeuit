@@ -1,5 +1,7 @@
 int init();
+#ifndef NOF
 #define NOF 9
+#endif
 extern void* (*mame)(void*);
 //extern void* mainMenu(void*);
 extern void* (*comp)(void*);
@@ -26,6 +28,13 @@ extern void* compress6(void*);
 extern void* compress7(void*);
 
 extern void* getIndex(void*);
+
+extern void* deCompress2(void*);
+extern void* deCompress3(void*);
+extern void* deCompress4(void*);
+extern void* deCompress5(void*);
+extern void* deCompress6(void*);
+extern void* deCompress7(void*);
 
 typedef struct DsUnique{
 	char *ma;

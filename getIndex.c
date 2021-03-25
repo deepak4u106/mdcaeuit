@@ -10,8 +10,8 @@ void* getIndex(void* arg){
 	d = (DsUnique*)malloc(sizeof(DsUnique));
 
 	d = (DsUnique*)arg;
-	
-	for(*i = 0 ; *i < strlen(d->ma) ; ++*i)
+	printf("GET INDEX %c\n", d->ch);
+	for(*i = 0 ; *i < strlen(d->ma) ; *i+=1)
 	{
 		if(*(d->ma + *i) == d->ch){
 			

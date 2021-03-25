@@ -20,6 +20,17 @@ void* compress5(void*);
 void* compress6(void*);
 void* compress7(void*);
 
+void* getIndex(void*);
+
+void* deCompress2(void*);
+void* deCompress3(void*);
+void* deCompress4(void*);
+void* deCompress5(void*);
+void* deCompress6(void*);
+void* deCompress7(void*);
+
+
+
 void* (*fptr[NOF])(void*);
 int init(){
 
@@ -43,6 +54,13 @@ int init(){
 	fptr[15] = compress7;
 
 	fptr[16] = getIndex;
+	
+	fptr[17] = deCompress2;
+	fptr[18] = deCompress3;
+	fptr[19] = deCompress4;
+	fptr[20] = deCompress5;
+	fptr[21] = deCompress6;
+	fptr[22] = deCompress7;
 
 	return 0;	
 }

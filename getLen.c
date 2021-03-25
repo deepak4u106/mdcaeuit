@@ -5,12 +5,13 @@ void* getLen(void* arg){
 	printf("%s : Begin\n", __func__);
 	DsUnique *d;		
 	
-	d = (DsUnique*)arg;
 	int len;
 	int *cl;
+	char *ma;
+	ma = (char*)arg;
 	cl = (int*)malloc(sizeof(int)); 
 
-	len = strlen(d->ma);
+	len = strlen(ma);
 	printf("%s : %d\n",__func__ ,len);	
 	if(len < 4)
 		*cl = 2;	// 2^2 = 4

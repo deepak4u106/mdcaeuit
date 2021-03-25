@@ -4,6 +4,7 @@
 void* createMasterArray(void *arg)
 {
 	char ch;
+	int noc;
 	int fd,ret,i;
 	printf("%s Begin\n", __func__);
 //	char *ma;
@@ -28,7 +29,10 @@ void* createMasterArray(void *arg)
 	
 //	d->ma = ma;
 	a->ma = d->ma;
-	while(1)
+	noc = lseek(a->fd,0,SEEK_END)-1;
+	lseek(a->fd,0,SEEK_SET);
+	printf("N O C : %d\n", noc);
+	while(noc>0)
 	{
 		ret = read(a->fd,&d->ch,1); 	 //read the file using file discriptor, "buffer" , no of char to read
 		if(ret == -1)
@@ -43,11 +47,8 @@ void* createMasterArray(void *arg)
 //		d->ch = ch;
 		if(*(int*)(*fptr[8])((void*)d))  // Unique Fn
 			*(d->ma + i++) = d->ch;
+		noc--;
 	}
-	int noc;
-	noc = lseek(a->fd,0,SEEK_END);
-	lseek(a->fd,0,SEEK_SET);
-	printf("N O C : %d\n", noc);
 //	d->ma = ma;
 //	printf("ma : %s\n", ma);
 	printf("d->ma : %s\n", d->ma);

@@ -30,7 +30,7 @@ void* compression(void* arg)
 	printf("%s \n", d->ma);
 	a->ma = d->ma;
 	printf("TEST %s \n", a->ma);
-	cl = (*fptr[9])((void*)d);     //get lenth of the master array
+	cl = (*fptr[9])((void*)d->ma);     //get lenth of the master array
 	printf("CL : %d \n", *cl);
 		
 	if(*cl >= 2 && *cl <= 7)
