@@ -6,7 +6,7 @@ void* compress4(void* arg)
 	int cfd,eky;
 	int ret,noc,size;
 	int index;
-	unsigned char byt,ch;
+	unsigned char byt,ch,cc;
 	Dscompress *a;
 	DsUnique *d;
 
@@ -14,18 +14,18 @@ void* compress4(void* arg)
 	d = (DsUnique*)malloc(sizeof(DsUnique));
 	a = (Dscompress*)arg;
 	printf("TEST : %s\n", a->ma);
-	noc = lseek(a->fd,0,SEEK_END)-1;
+	noc = lseek(a->fd,0,SEEK_END);
 	lseek(a->fd,0,SEEK_SET);
 	d->ma = a->ma;
 	printf("Give compressed file name\n");	
-	cfd = *(int*)(*fptr[6])((void*)"creat|writing"); // openFile();
+	cfd = *(int*)(*fptr[6])((void*)"creat|writing"); // openFile(); for compFile
 	if(!cfd)
 	{
 		perror("read");
 		(*fptr[1])((void*)"failure");
 	}
 	printf("Give Encyption Key\n");	
-	eky = *(int*)(*fptr[6])((void*)"creat|writing"); // openFile();
+	eky = *(int*)(*fptr[6])((void*)"creat|writing"); // openFile(); for encKey
 	if(!eky)
 	{
 		perror("read");
@@ -43,6 +43,7 @@ void* compress4(void* arg)
 	{
 		byt ^= byt;			//byt = 0000 0000
 		ret = read(a->fd,&d->ch,1);	// ch='i' 
+		printf("%s : d->ch : %c\n", __func__,d->ch);
 
 		if(ret == -1)
 		{
@@ -55,11 +56,11 @@ void* compress4(void* arg)
 
 		index = *(int*)(*fptr[16])((void*)d); // getIndex() // 00000004
 		ch = (unsigned char)index;
-		ch <<= 4; 	// To remove the garbage values from the binary code // 00040000
-		byt |= ch; 	// byt -> 0000 0000 |= ch -> 0004 0000(For example) // byt -> 0004 0000
+		cc = ch;
+		cc <<= 4; 	// To remove the garbage values from the binary code // 00040000
+		byt |= cc; 	// byt -> 0000 0000 |= ch -> 0004 0000(For example) // byt -> 0004 0000
 		noc--;
-		printf("N O C : %d\n", noc);
-		if(noc == 0)
+		if(noc == 0)    // Break the loop when the noc == 0
 			break;
 	// byt -> 0004 0000
 	//----------------------------------------------------------------------------------------------------
@@ -75,13 +76,15 @@ void* compress4(void* arg)
 
 		index = *(int*)(*fptr[16])((void*)d);   // getIndex() 5th index -> 00000005
 		ch = (unsigned char)index; 		// 0000 0005
-		ch <<=4; 		   		// 0005 0000
-		ch >>=4; 		   		// 0000 0005
-		byt = byt | ch;		   		// 0004 0000 |= 0000 0005 -> 00040005
+		cc = ch;
+		cc <<=4; 		   		// 0005 0000
+		cc >>=4; 		   		// 0000 0005
+		byt = byt | cc;		   		// 0004 0000 |= 0000 0005 -> 00040005
 		noc--;
-		printf("N O C : %d\n", noc);
-	//---------------------------------------------------------------------------------------------------------------
-
+		printf("%s : N O C : %d\n",__func__, noc);
+	//----------------------------------------------------------------------------------------------------
+		printf("%s : d->ch : %c\n", __func__,d->ch);
+//		(*fptr[23])((void*)&ch);		//printBits();
 		ret = write(cfd,&byt,1); 		// Return number of bytes
 
 		if(!ret)

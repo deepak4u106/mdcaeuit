@@ -28,6 +28,7 @@ void* deCompress4(void*);
 void* deCompress5(void*);
 void* deCompress6(void*);
 void* deCompress7(void*);
+void* printBits(void*);
 
 
 
@@ -61,6 +62,7 @@ int init(){
 	fptr[20] = deCompress5;
 	fptr[21] = deCompress6;
 	fptr[22] = deCompress7;
+	fptr[22] = printBits;
 
 	return 0;	
 }

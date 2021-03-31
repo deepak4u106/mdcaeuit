@@ -7,7 +7,6 @@ void* createMasterArray(void *arg)
 	int noc;
 	int fd,ret,i;
 	printf("%s Begin\n", __func__);
-//	char *ma;
 	DsUnique *d;
 	Dscompress *a;	
 	a = (Dscompress*)malloc(sizeof(Dscompress));
@@ -17,7 +16,7 @@ void* createMasterArray(void *arg)
 		(*fptr[1])((void*)"failure");
 	}
 	d->ma = (char*)malloc(128);
-	
+
 	if(!d){
 		perror("malloc");
 		(*fptr[1])((void*)"failure");
@@ -26,8 +25,7 @@ void* createMasterArray(void *arg)
 
 	a->fd = *(int*)arg;		        //taking file discriptor to read the file coming from argument passed in function
 	i = 0;
-	
-//	d->ma = ma;
+
 	a->ma = d->ma;
 	noc = lseek(a->fd,0,SEEK_END)-1;
 	lseek(a->fd,0,SEEK_SET);
@@ -43,17 +41,11 @@ void* createMasterArray(void *arg)
 		else if(ret == 0){ 
 			break;
 		}
-	
-//		d->ch = ch;
+
 		if(*(int*)(*fptr[8])((void*)d))  // Unique Fn
 			*(d->ma + i++) = d->ch;
 		noc--;
 	}
-//	d->ma = ma;
-//	printf("ma : %s\n", ma);
-	printf("d->ma : %s\n", d->ma);
-	printf("a->ma : %s\n", a->ma);
-	
 
 	printf("%s End\n", __func__);
 	return (void*)d;

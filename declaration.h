@@ -35,6 +35,7 @@ extern void* deCompress4(void*);
 extern void* deCompress5(void*);
 extern void* deCompress6(void*);
 extern void* deCompress7(void*);
+extern void* printBits(void*);
 
 typedef struct DsUnique{
 	char *ma;

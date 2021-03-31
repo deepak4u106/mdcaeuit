@@ -1,89 +1,70 @@
-#! /bin/bash
+#include"header.h"
+#include"declaration.h"
 
-checkIn(){
-for FL in $(ls *.h) $(ls *.c)
-do				
-	ci $FL
-done
-}
-
-checkOut(){
-for FL in $(ls *.h,v) $(ls *.c,v)
-do				
-	co $FL
-done
-}
-
-
-checkOutDevs(){
-for FL in $(ls *.h,v) $(ls *.c,v)
-do				
-	co -l $FL
-done
-}
-runProject(){
-	read  -n1 -p "Do you want to run project(y/n)? "
-	echo
-	if [ $REPLY == 'y' ]
-	then 
-		./out
+void* deCompress4(void* arg)
+{
+	char *ma,ch,*dc;
+	int index,ret,noc,eky,ic,len,cfd,cf;
+	printf("%s : Begin\n",__func__);
 	
-	elif [ $REPLY == 'n' ]
-	then 
-		exit
-	
-	fi
+	ma = (char*)arg;
+//	ma = (char*)malloc(sizeof(char));
+	DsUnique *d;
+	d = (DsUnique*)malloc(sizeof(DsUnique));
+
+	if(!d)
+	{
+		perror("malloc");
+		(*fptr[1])((void*)"failure");
+	}
+	d->ma = ma;
+	len = strlen(ma);
+	printf("Enter the encryption file\n");
+	printf("MASTER ARRAY : %s\n", ma);
+	eky = *(int*)(*fptr[6])((void*)"reading");
+	if(!eky)
+	{
+		perror("read");
+		(*fptr[1])((void*)"failure");
+	}
+	cf = *(int*)(*fptr[6])((void*)"reading");
+	if(!cf)
+	{
+		perror("read");
+		(*fptr[1])((void*)"failure");
+	}
+
+	noc = lseek(eky,0,SEEK_END);
+	lseek(eky,0,SEEK_SET);
+	printf("Enter the final file\n");
+	cfd = *(int*)(*fptr[6])((void*)"writing|creat");
+
+	if(!cfd)
+	{
+		perror("write");
+		(*fptr[1])((void*)"failure");
+	}
+
+	while(noc > 0)
+	{
+		ret = read(eky,&d->ch,1);	
+		
+		if(ret == 1)
+		{
+			(*fptr[1])((void*)"failure");
+		}
+		else if(ret == 0)
+			break;
+		d->ch>>=d->ch;
+		ic = (int)d->ch;
+		dc = (ma+ic);	
+		
+	printf("%s : INDEX : %d\n", __func__,index);
+	}
+	ret = write(cfd,dc,len);
+	printf("%s : INDEX : %d\n", __func__,index);
+
+	printf("%s : End\n",__func__);
+
+
 }
-
-
-
-#We start the script form here
-buildProject(){
-if ( make )
-then
-	echo "Programme build success"
-
-
-else 
-	echo "ERROR! Programme build failed"
-fi
-}
-
-
-	while ( true )
-	do
-	echo "___Main Menu___"
-	echo "1: Check in files"
-	echo "2: Check out files"
-	echo "3: Check out files for dev"
-	echo "4: Build the project"
-	echo "5: Run the project"
-	echo "0: exit"
-	read -n1 -p "Enter the choice : " choice
-	echo
-	case $choice in 
-		1)
-			checkIn
-			;;
-		2)	
-			checkOut
-			;;
-		3)
-			checkOutDevs
-			;;
-		4) 
-			buildProject
-			;;
-		5)	
-			
-			runProject
-			;;
-		0)
-			exit		
-	esac
-	done
-
-
-
-
-

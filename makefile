@@ -1,8 +1,10 @@
 #! /bin/bash
 
-out:main.o mainMenu.o exitFunc.o compression.o deCompression.o compStats.o deCompStats.o openFile.o init.o createMasterArray.o unique.o compress2.o compress3.o compress4.o compress5.o compress6.o compress7.o getIndex.o getLen.o deCompress2.o deCompress3.o deCompress4.o deCompress5.o deCompress6.o deCompress7.o
-	gcc -o out main.o mainMenu.o exitFunc.o compression.o deCompression.o compStats.o deCompStats.o openFile.o init.o createMasterArray.o unique.o compress2.o compress3.o compress4.o compress5.o compress6.o compress7.o getIndex.o getLen.o deCompress2.o deCompress3.o deCompress4.o deCompress5.o deCompress6.o deCompress7.o
+out:main.o mainMenu.o exitFunc.o compression.o deCompression.o compStats.o deCompStats.o openFile.o init.o createMasterArray.o unique.o compress2.o compress3.o compress4.o compress5.o compress6.o compress7.o getIndex.o getLen.o deCompress2.o deCompress3.o deCompress4.o deCompress5.o deCompress6.o deCompress7.o printBits.o
+	gcc -o out main.o mainMenu.o exitFunc.o compression.o deCompression.o compStats.o deCompStats.o openFile.o init.o createMasterArray.o unique.o compress2.o compress3.o compress4.o compress5.o compress6.o compress7.o getIndex.o getLen.o deCompress2.o deCompress3.o deCompress4.o deCompress5.o deCompress6.o deCompress7.o printBits.o
 
+printBits.o:printBits.c declaration.h header.h
+	gcc -c printBits.c
 deCompress7.o:deCompress7.c declaration.h header.h
 	gcc -c deCompress7.c
 deCompress6.o:deCompress6.c declaration.h header.h
