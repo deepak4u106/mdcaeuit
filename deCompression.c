@@ -8,30 +8,22 @@ void* deCompression(void* arg)
 	int *cl;
 	cl = (int*)malloc(sizeof(int));
 	printf("%s : Begin\n",__func__);
-	noc = lseek(eky,0,SEEK_END)-1;
-	lseek(eky,0,SEEK_SET);
 	eky = *(int*)(*fptr[6])((void*)"reading"); // openFile();
-	size = strlen(ma);
-	printf("S I Z E %d\n", size);
-	ret = read(eky,ma,size);
+	noc = lseek(eky,0,SEEK_END);
+	lseek(eky,0,SEEK_SET);
+	printf("N O C : %d\n", noc);
+	ma = (char*)malloc(sizeof(char)*noc);
+	memset(ma,'0',noc);
+	ret = read(eky,ma,noc);
 	if(ret == -1)
 	{
 		perror("read");		
 		(*fptr[1])((void*)"failure");
 	}
 	
-	cl = *(int*)(*fptr[9])((void*)ma);	
-	
+	cl = (int*)(*fptr[9])((void*)ma); //getLen();	
 	if(*cl >= 2 && *cl <= 7)
-	{
-		(*fptr[*cl + 15])((void*)ma);
-	
-	
-	}
-
-	printf("%s : M A : %s \n", __func__,ma);
-
+		(*fptr[*cl + 15])((void*)ma); // deCompress2-7();
+	close(eky);
 	printf("%s : End\n",__func__);
-
-
 }
