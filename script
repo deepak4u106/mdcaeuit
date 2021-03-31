@@ -1,0 +1,70 @@
+#include"header.h"
+#include"declaration.h"
+
+void* deCompress4(void* arg)
+{
+	char *ma,ch,*dc;
+	int index,ret,noc,eky,ic,len,cfd,cf;
+	printf("%s : Begin\n",__func__);
+	
+	ma = (char*)arg;
+//	ma = (char*)malloc(sizeof(char));
+	DsUnique *d;
+	d = (DsUnique*)malloc(sizeof(DsUnique));
+
+	if(!d)
+	{
+		perror("malloc");
+		(*fptr[1])((void*)"failure");
+	}
+	d->ma = ma;
+	len = strlen(ma);
+	printf("Enter the encryption file\n");
+	printf("MASTER ARRAY : %s\n", ma);
+	eky = *(int*)(*fptr[6])((void*)"reading");
+	if(!eky)
+	{
+		perror("read");
+		(*fptr[1])((void*)"failure");
+	}
+	cf = *(int*)(*fptr[6])((void*)"reading");
+	if(!cf)
+	{
+		perror("read");
+		(*fptr[1])((void*)"failure");
+	}
+
+	noc = lseek(eky,0,SEEK_END);
+	lseek(eky,0,SEEK_SET);
+	printf("Enter the final file\n");
+	cfd = *(int*)(*fptr[6])((void*)"writing|creat");
+
+	if(!cfd)
+	{
+		perror("write");
+		(*fptr[1])((void*)"failure");
+	}
+
+	while(noc > 0)
+	{
+		ret = read(eky,&d->ch,1);	
+		
+		if(ret == 1)
+		{
+			(*fptr[1])((void*)"failure");
+		}
+		else if(ret == 0)
+			break;
+		d->ch>>=d->ch;
+		ic = (int)d->ch;
+		dc = (ma+ic);	
+		
+	printf("%s : INDEX : %d\n", __func__,index);
+	}
+	ret = write(cfd,dc,len);
+	printf("%s : INDEX : %d\n", __func__,index);
+
+	printf("%s : End\n",__func__);
+
+
+}
